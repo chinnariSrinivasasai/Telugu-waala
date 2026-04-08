@@ -1,44 +1,37 @@
-# 💸 Telugu-Waala – Earning Platform
+# 💸 Telugu-Waala – Earning Platform (React App)
 
-A full-stack **reward-based earning platform** where users can complete tasks like spin, scratch cards, and daily streaks to earn rewards and withdraw money.
+A modern **reward-based earning platform** built using ReactJS, where users can earn rewards through activities like spin, scratch cards, and daily streaks.
 
-Designed with a scalable architecture and modern UI, this project simulates real-world earning applications.
+This project simulates real-world earning applications with an interactive UI and scalable frontend architecture.
 
 ---
 
 ## 🚀 Features
 
 - 🔐 User Authentication (Login / Signup / Google OAuth)
-- 🎯 Daily Rewards System
+- 🎯 Reward Activities
   - 🎡 Spin & Win
   - 🎟️ Scratch Cards
   - 🔥 Daily Streak Rewards
 - 💰 Wallet System
   - Track earnings
-  - Reward history
-- 💸 Withdraw System
+  - View reward history
+- 💸 Withdrawal System
   - Request withdrawals
   - Transaction tracking
 - 📊 Dashboard
-  - User stats & activity
-- 🧾 Transaction History
-- ⚡ Smooth and responsive UI
+  - User activity & stats
+- ⚡ Fast and responsive UI
 
 ---
 
 ## 🛠️ Tech Stack
 
-### 🔹 Frontend
-- HTML, CSS, JavaScript / React
-
-### 🔹 Backend
-- Django / Node.js (based on your implementation)
-
-### 🔹 Database
-- SQLite / PostgreSQL / MongoDB
-
-### 🔹 Authentication
-- Google OAuth
+- **Frontend:** React.js
+- **Styling:** CSS / Tailwind CSS
+- **State Management:** React Hooks / Context API
+- **Routing:** React Router
+- **Deployment:** Vercel , Render
 
 ---
 
@@ -47,6 +40,5 @@ Designed with a scalable architecture and modern UI, this project simulates real
 ```bash
 git clone https://github.com/your-username/telugu-waala.git
 cd telugu-waala
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver
+npm install
+npm start
