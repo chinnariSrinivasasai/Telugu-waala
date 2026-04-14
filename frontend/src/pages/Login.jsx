@@ -63,11 +63,11 @@ export default function Login() {
             Login
           </button>
 
-          <div style={{ margin: "15px 0", textAlign: "center" }}>OR</div>
+          {/* <div style={{ margin: "15px 0", textAlign: "center" }}>OR</div>
 
           <div style={{ display: "flex", justifyContent: "center" }}>
             <GoogleLogin onSuccess={googleSuccess} onError={() => {}} />
-          </div>
+          </div> */}
 
           <p style={styles.bottomText}>
             Don't have an account?{" "}
