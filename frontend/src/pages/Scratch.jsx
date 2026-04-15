@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../services/api";
 import Navbar from "../components/Navbar";
+import AdsenseAd from "../components/AdsenseAd";
 
 export default function Scratch() {
   const [popup, setPopup] = useState({ show: false, message: "" });
@@ -48,6 +49,9 @@ export default function Scratch() {
             SCRATCH NOW
           </button>
         </div>
+         <div style={{ marginTop: "25px" }}>
+    <AdsenseAd />
+  </div>
       </div>
 
       {/* POPUP */}
