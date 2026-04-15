@@ -1,19 +1,26 @@
 import { useState } from "react";
 import api from "../services/api";
 import Navbar from "../components/Navbar";
+import AdsenseAd from "../components/AdsenseAd";
 
 export default function Spin() {
   const [popup, setPopup] = useState({ show: false, message: "" });
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+
+  // ✅ SAFE user initialization
+  const [user, setUser] = useState(() => {
+    const stored = localStorage.getItem("user");
+    return stored ? JSON.parse(stored) : { coins: 0 };
+  });
 
   const spinNow = async () => {
     try {
       const res = await api.post("/spin");
       const reward = res.data.reward;
 
-      let msg = reward === 0
-        ? "🦆 Duck! Better luck next time!"
-        : `🎉 You won ${reward} coins!`;
+      let msg =
+        reward === 0
+          ? "🦆 Duck! Better luck next time!"
+          : `🎉 You won ${reward} coins!`;
 
       const updatedUser = { ...user, coins: res.data.coins };
       setUser(updatedUser);
@@ -23,7 +30,7 @@ export default function Spin() {
     } catch (err) {
       setPopup({
         show: true,
-        message: err.response?.data?.message || "Spin failed"
+        message: err.response?.data?.message || "Spin failed",
       });
     }
   };
@@ -37,9 +44,16 @@ export default function Spin() {
         <div style={styles.coins}>💰 Coins: {user.coins}</div>
 
         <div
-          style={{ ...styles.card, background: "linear-gradient(135deg, #6366f1, #22c55e)" }}
-          onMouseEnter={e => e.currentTarget.style.transform = "scale(1.05)"}
-          onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+          style={{
+            ...styles.card,
+            background: "linear-gradient(135deg, #6366f1, #22c55e)",
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.transform = "scale(1.05)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.transform = "scale(1)")
+          }
         >
           <div style={styles.bigIcon}>🎡</div>
           <div style={styles.cardText}>Try your luck!</div>
@@ -50,11 +64,17 @@ export default function Spin() {
         </div>
       </div>
 
-      {/* POPUP */}
+      {/* ✅ POPUP WITH SAFE ADS */}
       {popup.show && (
         <div style={overlayStyle}>
           <div style={popupStyle}>
             <h2>{popup.message}</h2>
+
+            {/* ✅ Ad only inside popup */}
+            <div style={{ margin: "15px 0" }}>
+              <AdsenseAd />
+            </div>
+
             <button
               onClick={() => setPopup({ show: false, message: "" })}
               style={closeBtn}
@@ -70,10 +90,28 @@ export default function Spin() {
 
 /* STYLES */
 const styles = {
-  page: { minHeight: "100vh", background: "var(--bg)", color: "var(--text)" },
-  container: { maxWidth: 600, margin: "0 auto", padding: 20, textAlign: "center" },
-  title: { fontSize: 36, fontWeight: "800", marginBottom: 10 },
-  coins: { fontSize: 18, color: "#22c55e", fontWeight: "bold", marginBottom: 20 },
+  page: {
+    minHeight: "100vh",
+    background: "var(--bg)",
+    color: "var(--text)",
+  },
+  container: {
+    maxWidth: 600,
+    margin: "0 auto",
+    padding: 20,
+    textAlign: "center",
+  },
+  title: {
+    fontSize: 36,
+    fontWeight: "800",
+    marginBottom: 10,
+  },
+  coins: {
+    fontSize: 18,
+    color: "#22c55e",
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
   card: {
     borderRadius: 30,
     padding: "50px 20px",
@@ -91,22 +129,38 @@ const styles = {
     cursor: "pointer",
     fontWeight: "bold",
     background: "#020617",
-    color: "white"
-  }
+    color: "white",
+  },
 };
 
 const overlayStyle = {
-  position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh",
-  backgroundColor: "rgba(0,0,0,0.6)", display: "flex",
-  alignItems: "center", justifyContent: "center", zIndex: 2000
+  position: "fixed",
+  top: 0,
+  left: 0,
+  width: "100vw",
+  height: "100vh",
+  backgroundColor: "rgba(0,0,0,0.6)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  zIndex: 2000,
 };
 
 const popupStyle = {
-  background: "var(--card)", color: "var(--cardText)",
-  padding: "30px", borderRadius: "20px", textAlign: "center", minWidth: "280px"
+  background: "var(--card)",
+  color: "var(--cardText)",
+  padding: "30px",
+  borderRadius: "20px",
+  textAlign: "center",
+  minWidth: "280px",
 };
 
 const closeBtn = {
-  marginTop: "20px", padding: "12px 30px", borderRadius: "999px",
-  border: "none", background: "#22c55e", fontWeight: "bold", cursor: "pointer"
+  marginTop: "20px",
+  padding: "12px 30px",
+  borderRadius: "999px",
+  border: "none",
+  background: "#22c55e",
+  fontWeight: "bold",
+  cursor: "pointer",
 };
